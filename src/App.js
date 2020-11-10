@@ -3,6 +3,7 @@ import './App.css';
 import LogIn from './components/LogIn'
 import SearchBar from './components/SearchBar'
 import OrganismContainer from './components/OrganismContainer'
+import DisplayOrganism from './components/DisplayOrganism'
 
 class App extends Component {
 
@@ -49,12 +50,14 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state)
+    console.log(this.selectedSpecies)
     return (
       <div className="App">
         <LogIn />
         <SearchBar handleSearchSubmit={this.handleSearchSubmit}/>
-        <OrganismContainer speciesSearch={this.state.speciesSearch} handleClick={this.displayOrganism}/>
+        {this.state.selectedSpecies ?
+        <DisplayOrganism selectedSpecies={this.state.selectedSpecies} />
+        : <OrganismContainer speciesSearch={this.state.speciesSearch} handleClick={this.displayOrganism}/>}
       </div>
     );
   }

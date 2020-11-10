@@ -1,7 +1,6 @@
 import React from 'react'
 
 const OrganismCard = ({ organism, handleClick }) => {
-    console.log(organism)
     return(
         <div onClick={() => handleClick(organism)} className="orgCard minOrgCard maxOrgCard">
             <h3>{organism.AcceptedCommonName}</h3>
