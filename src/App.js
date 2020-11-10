@@ -49,6 +49,12 @@ class App extends Component {
         }))
   }
 
+  clearSelectedSpecies = () => {
+    this.setState({
+      selectedSpecies: null
+    })
+  }
+
   render() {
     console.log(this.selectedSpecies)
     return (
@@ -56,7 +62,7 @@ class App extends Component {
         <LogIn />
         <SearchBar handleSearchSubmit={this.handleSearchSubmit}/>
         {this.state.selectedSpecies ?
-        <DisplayOrganism selectedSpecies={this.state.selectedSpecies} />
+        <DisplayOrganism selectedSpecies={this.state.selectedSpecies} handleClick={this.clearSelectedSpecies}/>
         : <OrganismContainer speciesSearch={this.state.speciesSearch} handleClick={this.displayOrganism}/>}
       </div>
     );
