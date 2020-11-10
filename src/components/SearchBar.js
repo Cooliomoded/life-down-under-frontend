@@ -6,30 +6,12 @@ class SearchBar extends Component {
         filter: null
     }
 
-    handleSearchSubmit = (event) => {
-        event.preventDefault()
-        console.log(event.target.kingdom.value, event.target.animal[1].value)
-            fetch("http://localhost:3000/search_by_species", {
-            method: "POST",
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                kingdom: event.target.kingdom.value,
-                animal: event.target.animal[1].value
-            })
-            })
-            .then(res => res.json())
-            .then(data => console.log(data))
-
-    }
-
     render() {
+        const { handleSearchSubmit } = this.props
         return(
             <div>
                 <div>
-                    <form onSubmit={this.handleSearchSubmit}>
+                    <form onSubmit={handleSearchSubmit}>
                         <input type="radio" id="animal" name="kingdom" value="animals"></input>
                         <label htmlFor="animal">Animal</label>
                         <input type="radio" id="plant" name="kingdom" value="plants"></input>
