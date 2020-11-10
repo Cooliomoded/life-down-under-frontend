@@ -36,3 +36,38 @@
     transform: rotate(360deg);
   }
 }
+
+.orgContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.orgCard {
+  flex: 0 1 18%;
+  display: inline;
+  background-repeat: no-repeat;
+  background-position: center 90%;
+  float: left;
+  margin: 2%;
+  padding: 1%;
+  outline: #3b0b0b solid thick;
+  transition: 0.75s;
+  opacity: 1;
+}
+
+.minOrgTile {
+  background-size: cover;
+  width: 500px;
+  height: 500px;
+}
+
+.maxOrgTile {
+  background-size: cover;
+  width: 500px;
+  height: 500px;
+}
+
+.orgCard:hover {
+  transform: scale(1.05);
+}
