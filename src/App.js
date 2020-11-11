@@ -149,8 +149,6 @@ class App extends Component {
           organism_id: organism.id
         })
       })
-      .then(res => res.json())
-      .then(favorite => console.log(favorite))
     }
   
   render() {
