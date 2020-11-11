@@ -1,10 +1,10 @@
 import React from 'react'
 import OrganismInfoCard from './OrganismInfoCard'
 
-const DisplayOrganism = ({ selectedSpecies, handleClick }) => {
+const DisplayOrganism = ({ selectedSpecies, handleClick, addToFavorites }) => {
     return(
         <div className='displayOrgContainer'>
-            <OrganismInfoCard selectedSpecies={selectedSpecies} handleClick={handleClick}/>
+            <OrganismInfoCard selectedSpecies={selectedSpecies} handleClick={handleClick} addToFavorites={addToFavorites}/>
         </div>
     )
 

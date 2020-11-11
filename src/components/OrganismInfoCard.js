@@ -1,6 +1,6 @@
 import React from 'react'
 
-const OrganismInfoCard = ({ selectedSpecies, handleClick }) => {
+const OrganismInfoCard = ({ selectedSpecies, handleClick, addToFavorites }) => {
     
     return(
         <div>
@@ -8,7 +8,7 @@ const OrganismInfoCard = ({ selectedSpecies, handleClick }) => {
             <h1>{selectedSpecies.Species.ScientificName}: Commonly known as the {selectedSpecies.Species.AcceptedCommonName}</h1>
             <h2>{selectedSpecies.Species.ClassCommonName}</h2>
             <h2>{selectedSpecies.Species.ClassName}</h2>
-            
+            <button onClick={() => addToFavorites(selectedSpecies)}>Add To Favorites</button>            
             <button onClick={handleClick}>Return to Search Results</button>
         </div>
     )

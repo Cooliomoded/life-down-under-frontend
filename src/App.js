@@ -81,7 +81,8 @@ class App extends Component {
 
   handleLogout = () => {
     this.setState({
-      currentUser: null
+      currentUser: null,
+      displayUser: false
     })
   }
 
@@ -93,11 +94,11 @@ class App extends Component {
 
   submitSignUp = (event) => {
     event.preventDefault()
-        fetch("http://localhost:3000/users/signup", {
-        method: "POST",
+        fetch('http://localhost:3000/users/signup', {
+        method: 'POST',
         headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         },
         body: JSON.stringify({
             username: event.target[0].value,
@@ -111,17 +112,52 @@ class App extends Component {
         .then(data => console.log(data))
   }
 
+  addToFavorites = (organism) => {
+    console.log(organism)
+    const imgURL = organism.Species.Image ? (organism.Species.Image.URL ?  organism.Species.Image.URL : organism.Species.Image[0].URL) : null
+    fetch(`http://localhost:3000/organisms/create_organism`, {
+      method: "POST",
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          name: organism.Species.AcceptedCommonName,
+          img: imgURL,
+          tag: organism.Species.TaxonID
+      })
+      })
+      .then(res => res.json())
+      .then(organism => this.createFavorite(organism))
+    }
+
   showProfile = () => {
     this.setState({
       displayUser: !this.state.displayUser
     })
   }
 
+    createFavorite = (organism) => {
+      fetch('http://localhost:3000/favorites/create_favorite', {
+        method: "POST",
+        headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user_id: this.state.currentUser.id,
+          organism_id: organism.id
+        })
+      })
+      .then(res => res.json())
+      .then(favorite => console.log(favorite))
+    }
+  
   render() {
     return (
       <div className="App">
 
-        {this.state.currentUser ? <DisplayUser user={this.state.currentUser} showProfile={this.showProfile}/> : (this.state.displaySignUp ?
+        {this.state.currentUser ? <DisplayUser user={this.state.currentUser} handleLogout={this.handleLogout} showProfile={this.showProfile} /> : (this.state.displaySignUp ?
         <SignUp submitSignUp={this.submitSignUp} /> : <LogIn handleLogin={this.handleLogin} handleSignUp={this.handleSignUp}/>)}
         
         
@@ -129,11 +165,11 @@ class App extends Component {
 
         {this.state.displayUser ? <DisplayUserInfo user={this.state.currentUser} /> : 
         (this.state.selectedSpecies ?
-        <DisplayOrganism selectedSpecies={this.state.selectedSpecies} handleClick={this.clearSelectedSpecies}/>
+        <DisplayOrganism selectedSpecies={this.state.selectedSpecies} handleClick={this.clearSelectedSpecies} addToFavorites={this.addToFavorites}/>
         : <OrganismContainer speciesSearch={this.state.speciesSearch} handleClick={this.displayOrganism}/>)}
         
       </div>
-    );
+    )
   }
 }
 
