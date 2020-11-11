@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import LogIn from './components/LogIn'
+import SignUp from './components/SignUp'
 import SearchBar from './components/SearchBar'
 import OrganismContainer from './components/OrganismContainer'
 import DisplayOrganism from './components/DisplayOrganism'
@@ -13,7 +14,8 @@ class App extends Component {
     speciesSearch: [],
     selectedSpecies: null,
     currentUser: null,
-    displayUser: false
+    displayUser: false,
+    displaySignUp: false
   }
 
   handleLogin = (event) => {
@@ -83,6 +85,32 @@ class App extends Component {
     })
   }
 
+  handleSignUp = () => {
+    this.setState({
+      displaySignUp: !this.state.displaySignUp
+    })
+  }
+
+  submitSignUp = (event) => {
+    event.preventDefault()
+        fetch("http://localhost:3000/users/signup", {
+        method: "POST",
+        headers: {
+            "Accept": "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            username: event.target[0].value,
+            password: event.target[1].value,
+            profile_pic: event.target[2].value,
+            bio: event.target[3].value,
+            location: event.target[4].value   
+        })
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+  }
+
   showProfile = () => {
     this.setState({
       displayUser: !this.state.displayUser
@@ -90,11 +118,12 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.selectedSpecies)
     return (
       <div className="App">
 
-        {this.state.currentUser ? <DisplayUser user={this.state.currentUser} showProfile={this.showProfile}/> : <LogIn handleLogin={this.handleLogin}/>}
+        {this.state.currentUser ? <DisplayUser user={this.state.currentUser} showProfile={this.showProfile}/> : (this.state.displaySignUp ?
+        <SignUp submitSignUp={this.submitSignUp} /> : <LogIn handleLogin={this.handleLogin} handleSignUp={this.handleSignUp}/>)}
+        
         
         <SearchBar handleSearchSubmit={this.handleSearchSubmit}/>
 
