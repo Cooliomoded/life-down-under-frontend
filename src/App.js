@@ -4,17 +4,38 @@ import LogIn from './components/LogIn'
 import SearchBar from './components/SearchBar'
 import OrganismContainer from './components/OrganismContainer'
 import DisplayOrganism from './components/DisplayOrganism'
+import DisplayUser from './components/DisplayUser'
 
 class App extends Component {
 
   state = {
     speciesSearch: [],
-    selectedSpecies: null
+    selectedSpecies: null,
+    currentUser: null,
+    displayUser: false
+  }
+
+  handleLogin = (event) => {
+    event.preventDefault()
+    fetch("http://localhost:3000/users/login", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        username: event.target.username.value
+        // bio: event.target.bio.value
+      })
+    })
+    .then(res => res.json())
+    .then(user => this.setState({
+      currentUser: user
+    }))
   }
   
   handleSearchSubmit = (event) => {
     event.preventDefault()
-    console.log(event.target.kingdom.value, event.target.animal[1].value)
         fetch("http://localhost:3000/search_by_species", {
         method: "POST",
         headers: {
@@ -55,15 +76,33 @@ class App extends Component {
     })
   }
 
+  handleLogout = () => {
+    this.setState({
+      currentUser: null
+    })
+  }
+
+  showProfile = () => {
+    this.setState({
+      displayUser: !this.state.displayUser
+    })
+  }
+
   render() {
     console.log(this.selectedSpecies)
     return (
       <div className="App">
-        <LogIn />
+
+        {!this.state.currentUser ? <LogIn handleLogin={this.handleLogin}/> : null}
+
+        {this.state.currentUser ? <DisplayUser user={this.state.currentUser} /> : null}
+
         <SearchBar handleSearchSubmit={this.handleSearchSubmit}/>
+
         {this.state.selectedSpecies ?
         <DisplayOrganism selectedSpecies={this.state.selectedSpecies} handleClick={this.clearSelectedSpecies}/>
         : <OrganismContainer speciesSearch={this.state.speciesSearch} handleClick={this.displayOrganism}/>}
+        
       </div>
     );
   }
