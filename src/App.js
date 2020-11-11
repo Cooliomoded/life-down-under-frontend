@@ -5,6 +5,7 @@ import SearchBar from './components/SearchBar'
 import OrganismContainer from './components/OrganismContainer'
 import DisplayOrganism from './components/DisplayOrganism'
 import DisplayUser from './components/DisplayUser'
+import DisplayUserInfo from './components/DisplayUserInfo'
 
 class App extends Component {
 
@@ -93,15 +94,14 @@ class App extends Component {
     return (
       <div className="App">
 
-        {!this.state.currentUser ? <LogIn handleLogin={this.handleLogin}/> : null}
-
-        {this.state.currentUser ? <DisplayUser user={this.state.currentUser} /> : null}
-
+        {this.state.currentUser ? <DisplayUser user={this.state.currentUser} showProfile={this.showProfile}/> : <LogIn handleLogin={this.handleLogin}/>}
+        
         <SearchBar handleSearchSubmit={this.handleSearchSubmit}/>
 
-        {this.state.selectedSpecies ?
+        {this.state.displayUser ? <DisplayUserInfo user={this.state.currentUser} /> : 
+        (this.state.selectedSpecies ?
         <DisplayOrganism selectedSpecies={this.state.selectedSpecies} handleClick={this.clearSelectedSpecies}/>
-        : <OrganismContainer speciesSearch={this.state.speciesSearch} handleClick={this.displayOrganism}/>}
+        : <OrganismContainer speciesSearch={this.state.speciesSearch} handleClick={this.displayOrganism}/>)}
         
       </div>
     );
