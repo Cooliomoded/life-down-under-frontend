@@ -9,7 +9,7 @@ const DisplayUserInfo = ( {user, displayEditPage} ) => {
             <h3>Bio: {user.bio}</h3>
             <img src={user.profile_pic}></img>
             <h3>Location: {user.location}</h3>
-            <button onClick={() => displayEditPage(user)}>Edit Profile</button>
+            <button onClick={displayEditPage}>Edit Profile</button>
         </div>
     )
 }

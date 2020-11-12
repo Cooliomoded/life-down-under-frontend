@@ -216,7 +216,7 @@ class App extends Component {
     ))
   }
 
-  displayEditPage = (user) => {
+  displayEditPage = () => {
     this.setState ({
       displayEditPage: !this.state.displayEditPage,
       speciesSearch: [],
@@ -227,19 +227,26 @@ class App extends Component {
     })
   }
 
-  editProfile = (user) => {
-    fetch(`http://localhost:3000/users/${user.id}`, {
+  editProfile = (event) => {
+    event.preventDefault()
+    fetch(`http://localhost:3000/users/${this.state.currentUser.id}`, {
       method: "PATCH",
       headers: {
         "Accept": "application/json",
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        bio: user.bio
+        profile_pic: event.target.profile_pic.value,
+        bio: event.target.bio.value,  
+        location: event.target.location.value
       })
     })
     .then(res => res.json())
-    .then(console.log)
+    .then(user => this.setState({
+      currentUser: user,
+      displayEditPage: !this.state.displayEditPage,
+      displayUser: true
+    }))
   }
   
   render() {

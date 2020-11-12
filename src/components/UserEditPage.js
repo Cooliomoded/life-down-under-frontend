@@ -4,10 +4,8 @@ const UserEditPage = ( {user, editProfile} ) => {
 
     return(
         <div>
-            <form onSubmit={() => editProfile(user)}>
+            <form onSubmit={editProfile}>
             <h2>Edit {user.username}:</h2>
-                <label htmlFor="username">Username:</label>
-                <input type="text" id="username" name="username" placeholder={user.username} required></input><br></br>
                 <label htmlFor="bio">Bio:</label>
                 <input type="bio" id="bio" name="bio" placeholder={user.bio} required></input><br></br>
                 <label htmlFor="profile_pic">Profile Pic URL:</label>
