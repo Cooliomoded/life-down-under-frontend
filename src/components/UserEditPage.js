@@ -1,0 +1,28 @@
+import React from 'react'
+
+const UserEditPage = ( {user, editProfile} ) => {
+
+    return(
+        <div>
+            <form onSubmit={() => editProfile(user)}>
+            <h2>Edit {user.username}:</h2>
+                <label htmlFor="username">Username:</label>
+                <input type="text" id="username" name="username" placeholder={user.username} required></input><br></br>
+                <label htmlFor="bio">Bio:</label>
+                <input type="bio" id="bio" name="bio" placeholder={user.bio} required></input><br></br>
+                <label htmlFor="profile_pic">Profile Pic URL:</label>
+                <input type="profile_pic" id="profile_pic" name="profile_pic" placeholder={user.profile_pic} ></input><br></br>
+                <label htmlFor="location">Location:</label>
+                <input type="location" id="location" name="location" placeholder={user.location} ></input><br></br>
+
+                <input type="submit" id="login-submit" name="login-submit"></input><br></br>
+                {/* <h1>{user.username}</h1>
+                <h3>Bio: {user.bio}</h3>
+                <img src={user.profile_pic}></img>
+                <h3>Location: {user.location}</h3> */}
+            </form>
+        </div>
+    )
+}
+
+export default UserEditPage

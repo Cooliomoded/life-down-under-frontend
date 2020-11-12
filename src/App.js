@@ -8,6 +8,7 @@ import FavoriteContainer from './components/FavoriteContainer'
 import DisplayOrganism from './components/DisplayOrganism'
 import DisplayUser from './components/DisplayUser'
 import DisplayUserInfo from './components/DisplayUserInfo'
+import UserEditPage from './components/UserEditPage'
 
 class App extends Component {
 
@@ -19,7 +20,8 @@ class App extends Component {
     displayUserFavorites: null,
     coolAnimals: [],
     displayUser: false,
-    displaySignUp: false
+    displaySignUp: false,
+    displayEditPage: false
   }
 
   handleLogin = (event) => {
@@ -56,9 +58,11 @@ class App extends Component {
         })
         })
         .then(res => res.json())
-        .then(organisms => this.setState({
-          speciesSearch: organisms.Species
-        }))
+        .then(organisms => {
+          let sortedOrganisms = organisms.Species.sort((a, b) => (a.AcceptedCommonName.toLowerCase() > b.AcceptedCommonName.toLowerCase()) ? 1 : -1)
+          this.setState({
+          speciesSearch: sortedOrganisms
+        })})
   }
 
   displayOrganism = (organism) => {
@@ -111,7 +115,8 @@ class App extends Component {
       displayUserFavorites: null,
       displayUser: false,
       displaySignUp: false,
-      coolAnimals: []
+      coolAnimals: [],
+      displayEditPage: false
     })
   }
 
@@ -162,7 +167,8 @@ class App extends Component {
   showProfile = () => {
     this.setState({
       displayUser: !this.state.displayUser,
-      coolAnimals: []
+      coolAnimals: [],
+      displayEditPage: false
     })
   }
 
@@ -209,6 +215,32 @@ class App extends Component {
         }))
     ))
   }
+
+  displayEditPage = (user) => {
+    this.setState ({
+      displayEditPage: !this.state.displayEditPage,
+      speciesSearch: [],
+      selectedSpecies: null,
+      displayUserFavorites: null,
+      displayUser: false,
+      displaySignUp: false,
+    })
+  }
+
+  editProfile = (user) => {
+    fetch(`http://localhost:3000/users/${user.id}`, {
+      method: "PATCH",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        bio: user.bio
+      })
+    })
+    .then(res => res.json())
+    .then(console.log)
+  }
   
   render() {
     console.log(this.state)
@@ -218,12 +250,12 @@ class App extends Component {
         {this.state.currentUser ? <DisplayUser user={this.state.currentUser} handleLogout={this.handleLogout} displayUserFavorites={this.displayUserFavorites} showProfile={this.showProfile} /> : (this.state.displaySignUp ?
         <SignUp submitSignUp={this.submitSignUp} /> : <LogIn handleLogin={this.handleLogin} handleSignUp={this.handleSignUp}/>)}
         
-        {this.state.coolAnimals ? <FavoriteContainer coolAnimals={this.state.coolAnimals} handleClick={this.displayFavoriteOrganism}/> : null}
         <SearchBar handleSearchSubmit={this.handleSearchSubmit}/>
-
-        {this.state.displayUser ? <DisplayUserInfo user={this.state.currentUser} /> : 
+        {this.state.coolAnimals ? <FavoriteContainer coolAnimals={this.state.coolAnimals} handleClick={this.displayFavoriteOrganism}/> : null}
+        {this.state.displayEditPage ? <UserEditPage user={this.state.currentUser} editProfile={this.editProfile}/> : null}
+        {this.state.displayUser ? <DisplayUserInfo user={this.state.currentUser} displayEditPage={this.displayEditPage}/> : 
         (this.state.selectedSpecies ?
-        <DisplayOrganism selectedSpecies={this.state.selectedSpecies} handleClick={this.clearSelectedSpecies} addToFavorites={this.addToFavorites} />
+        <DisplayOrganism selectedSpecies={this.state.selectedSpecies} handleClick={this.clearSelectedSpecies} addToFavorites={this.addToFavorites} currentUser={this.state.currentUser}/>
         : <OrganismContainer speciesSearch={this.state.speciesSearch} handleClick={this.displayOrganism} displayUserFavorites={this.displayUserFavorites}/>)}
         
       </div>

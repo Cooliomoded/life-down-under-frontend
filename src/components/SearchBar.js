@@ -24,7 +24,7 @@ class SearchBar extends Component {
                         <label htmlFor="protists">Protists</label>
                         <input type="radio" id="protozoans" name="kingdom" value="protozoans"></input>
                         <label htmlFor="protozoans">Protozoans</label>
-                        <input type="text" id="animal-search" name="animal"></input>
+                        <input type="text" id="animal-search" name="animal" required></input>
                         <input type="submit" id="animal-search-submit" name="animal-search-submit"></input>
                     </form>
                 </div>
