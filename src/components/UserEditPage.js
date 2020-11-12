@@ -14,10 +14,6 @@ const UserEditPage = ( {user, editProfile} ) => {
                 <input type="location" id="location" name="location" placeholder={user.location} ></input><br></br>
 
                 <input type="submit" id="login-submit" name="login-submit"></input><br></br>
-                {/* <h1>{user.username}</h1>
-                <h3>Bio: {user.bio}</h3>
-                <img src={user.profile_pic}></img>
-                <h3>Location: {user.location}</h3> */}
             </form>
         </div>
     )

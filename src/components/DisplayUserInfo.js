@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DisplayUserInfo = ( {user, displayEditPage} ) => {
+const DisplayUserInfo = ( {user, displayEditPage, deleteUser} ) => {
 
     return(
         <div>
@@ -10,6 +10,7 @@ const DisplayUserInfo = ( {user, displayEditPage} ) => {
             <img src={user.profile_pic}></img>
             <h3>Location: {user.location}</h3>
             <button onClick={displayEditPage}>Edit Profile</button>
+            <button onClick={deleteUser}>Delete User Profile</button>
         </div>
     )
 }

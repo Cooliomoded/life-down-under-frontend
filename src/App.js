@@ -143,7 +143,9 @@ class App extends Component {
         })
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(user => this.setState({
+          currentUser: user
+        }))
   }
 
   addToFavorites = (organism) => {
@@ -248,6 +250,27 @@ class App extends Component {
       displayUser: true
     }))
   }
+
+  deleteUser = () => {
+    fetch(`http://localhost:3000/users/${this.state.currentUser.id}`, {
+      method: "DELETE",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    }})
+    .then(res => res.json())
+    .then(data => this.setState({
+      speciesSearch: [],
+      selectedSpecies: null,
+      currentUser: null,
+      currentUserFavorites: [],
+      displayUserFavorites: null,
+      displayUser: false,
+      displaySignUp: false,
+      coolAnimals: [],
+      displayEditPage: false
+    }))
+  }
   
   render() {
     console.log(this.state)
@@ -259,8 +282,8 @@ class App extends Component {
         
         <SearchBar handleSearchSubmit={this.handleSearchSubmit}/>
         {this.state.coolAnimals ? <FavoriteContainer coolAnimals={this.state.coolAnimals} handleClick={this.displayFavoriteOrganism}/> : null}
-        {this.state.displayEditPage ? <UserEditPage user={this.state.currentUser} editProfile={this.editProfile}/> : null}
-        {this.state.displayUser ? <DisplayUserInfo user={this.state.currentUser} displayEditPage={this.displayEditPage}/> : 
+        {this.state.displayEditPage ? <UserEditPage user={this.state.currentUser} editProfile={this.editProfile} /> : null}
+        {this.state.displayUser ? <DisplayUserInfo user={this.state.currentUser} displayEditPage={this.displayEditPage} deleteUser={this.deleteUser}/> : 
         (this.state.selectedSpecies ?
         <DisplayOrganism selectedSpecies={this.state.selectedSpecies} handleClick={this.clearSelectedSpecies} addToFavorites={this.addToFavorites} currentUser={this.state.currentUser}/>
         : <OrganismContainer speciesSearch={this.state.speciesSearch} handleClick={this.displayOrganism} displayUserFavorites={this.displayUserFavorites}/>)}
