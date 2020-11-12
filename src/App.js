@@ -14,6 +14,8 @@ class App extends Component {
     speciesSearch: [],
     selectedSpecies: null,
     currentUser: null,
+    currentUserFavorites: [],
+    displayUserFavorites: null,
     displayUser: false,
     displaySignUp: false
   }
@@ -33,7 +35,8 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(user => this.setState({
-      currentUser: user
+      currentUser: user,
+      currentUserFavorites: user.favorites
     }))
   }
   
@@ -81,8 +84,13 @@ class App extends Component {
 
   handleLogout = () => {
     this.setState({
+      speciesSearch: [],
+      selectedSpecies: null,
       currentUser: null,
-      displayUser: false
+      currentUserFavorites: [],
+      displayUserFavorites: null,
+      displayUser: false,
+      displaySignUp: false
     })
   }
 
@@ -113,7 +121,6 @@ class App extends Component {
   }
 
   addToFavorites = (organism) => {
-    console.log(organism)
     const imgURL = organism.Species.Image ? (organism.Species.Image.URL ?  organism.Species.Image.URL : organism.Species.Image[0].URL) : null
     fetch(`http://localhost:3000/organisms/create_organism`, {
       method: "POST",
@@ -149,13 +156,24 @@ class App extends Component {
           organism_id: organism.id
         })
       })
+      .then(res => res.json())
+      .then(favorite => {if(!this.state.currentUserFavorites.find(favorite => favorite.organism_id === organism.id)) {
+        this.setState({
+        currentUserFavorites: [...this.state.currentUserFavorites, favorite]
+      })}})
     }
+
+  displayUserFavorites = () => {
+    this.setState({
+      displayUserFavorites: !this.state.displayUserFavorites
+    })
+  }
   
   render() {
     return (
       <div className="App">
 
-        {this.state.currentUser ? <DisplayUser user={this.state.currentUser} handleLogout={this.handleLogout} showProfile={this.showProfile} /> : (this.state.displaySignUp ?
+        {this.state.currentUser ? <DisplayUser user={this.state.currentUser} handleLogout={this.handleLogout} displayUserFavorites={this.displayUserFavorites} showProfile={this.showProfile} /> : (this.state.displaySignUp ?
         <SignUp submitSignUp={this.submitSignUp} /> : <LogIn handleLogin={this.handleLogin} handleSignUp={this.handleSignUp}/>)}
         
         
