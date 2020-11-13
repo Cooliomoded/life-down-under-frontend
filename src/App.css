@@ -5,7 +5,17 @@ input[type="button"], input[type="submit"] {
   border:1px solid; 
   border-radius: 5px;
   border-color: #661a00; 
-} 
+}
+
+input[type="button"]:hover {
+  background-color: #e6ffff;
+  box-shadow: 2px 2px 2px grey;
+}
+
+input[type="submit"]:hover {
+  background-color: #e6ffff;
+  box-shadow: 2px 2px 2px grey;
+}
 
 button { 
   color:#661a00; 
@@ -14,6 +24,11 @@ button {
   border:1px solid; 
   border-radius: 5px;
   border-color: #661a00; 
+}
+
+button:hover {
+  background-color: #e6ffff;
+  box-shadow: 2px 2px 2px grey;
 }
 
 body {
