@@ -3,16 +3,15 @@ import React from 'react'
 const LogIn = ( { handleLogin, handleSignUp } ) => {
     
     return(
-        <div>
+        <div className="login">
             <form onSubmit={handleLogin}>
-                <h2>Log In:</h2>
+                <h3>Log In:</h3>
                 <label htmlFor="username">Username:</label>
                 <input type="text" id="username" name="username" required></input><br></br>
                 <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" required></input>
+                <input type="password" id="password" name="password" required></input><br></br>
                 <input type="submit" id="login-submit" name="login-submit"></input><br></br>
                 <button onClick={handleSignUp}>Not a User? Sign Up!</button>
-
             </form>
         </div>
     )

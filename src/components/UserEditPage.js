@@ -3,7 +3,7 @@ import React from 'react'
 const UserEditPage = ( {user, editProfile} ) => {
 
     return(
-        <div>
+        <div className='login'>
             <form onSubmit={editProfile}>
             <h2>Edit {user.username}:</h2>
                 <label htmlFor="bio">Bio:</label>

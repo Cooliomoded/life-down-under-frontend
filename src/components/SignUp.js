@@ -3,7 +3,7 @@ import React from 'react'
 const SignUp = ( { submitSignUp } ) => {
     
     return(
-        <div>
+        <div className='login'>
             <form onSubmit={submitSignUp}>
                 <h2>Sign Up:</h2>
                 <label htmlFor="username">Username:</label>

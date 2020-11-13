@@ -17,7 +17,7 @@ class App extends Component {
     selectedSpecies: null,
     currentUser: null,
     currentUserFavorites: [],
-    displayUserFavorites: null,
+    displayUserFavorites: false,
     coolAnimals: [],
     displayUser: false,
     displaySignUp: false,
@@ -62,6 +62,7 @@ class App extends Component {
           let sortedOrganisms = organisms.Species.sort((a, b) => (a.AcceptedCommonName > b.AcceptedCommonName) ? 1 : -1)
           this.setState({
           displayUser: false,
+          displayUserFavorites: false,
           selectedSpecies: null,
           speciesSearch: sortedOrganisms
         })})
@@ -172,6 +173,7 @@ class App extends Component {
     this.setState({
       displayUser: !this.state.displayUser,
       coolAnimals: [],
+      displayUserFavorites: false,
       displayEditPage: false
     })
   }
@@ -199,6 +201,7 @@ class App extends Component {
     this.setState({
       speciesSearch: [],
       selectedSpecies: null,
+      displayUser: false,
       displayUserFavorites: !this.state.displayUserFavorites
     })
     this.fetchFavorites()
@@ -283,7 +286,7 @@ class App extends Component {
         <SignUp submitSignUp={this.submitSignUp} /> : <LogIn handleLogin={this.handleLogin} handleSignUp={this.handleSignUp}/>)}
         
         <SearchBar handleSearchSubmit={this.handleSearchSubmit}/>
-        {this.state.coolAnimals ? <FavoriteContainer coolAnimals={this.state.coolAnimals} handleClick={this.displayFavoriteOrganism}/> : null}
+        {this.state.displayUserFavorites ? <FavoriteContainer coolAnimals={this.state.coolAnimals} handleClick={this.displayFavoriteOrganism}/> : null}
         {this.state.displayEditPage ? <UserEditPage user={this.state.currentUser} editProfile={this.editProfile} /> : null}
         {this.state.displayUser ? <DisplayUserInfo user={this.state.currentUser} displayEditPage={this.displayEditPage} deleteUser={this.deleteUser}/> : 
         (this.state.selectedSpecies ?
