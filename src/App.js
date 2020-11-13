@@ -9,6 +9,7 @@ import DisplayOrganism from './components/DisplayOrganism'
 import DisplayUser from './components/DisplayUser'
 import DisplayUserInfo from './components/DisplayUserInfo'
 import UserEditPage from './components/UserEditPage'
+import WebsiteTitle from './components/WebsiteTitle'
 
 class App extends Component {
 
@@ -282,6 +283,8 @@ class App extends Component {
     return (
       <div className="App">
 
+        <WebsiteTitle />
+        
         {this.state.currentUser ? <DisplayUser user={this.state.currentUser} handleLogout={this.handleLogout} displayUserFavorites={this.displayUserFavorites} showProfile={this.showProfile} /> : (this.state.displaySignUp ?
         <SignUp submitSignUp={this.submitSignUp} /> : <LogIn handleLogin={this.handleLogin} handleSignUp={this.handleSignUp}/>)}
         

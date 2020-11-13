@@ -7,11 +7,12 @@ const UserEditPage = ( {user, editProfile} ) => {
             <form onSubmit={editProfile}>
             <h2>Edit {user.username}:</h2>
                 <label htmlFor="bio">Bio:</label>
-                <input type="bio" id="bio" name="bio" placeholder={user.bio} required></input><br></br>
-                <label htmlFor="profile_pic">Profile Pic URL:</label>
-                <input type="profile_pic" id="profile_pic" name="profile_pic" placeholder={user.profile_pic} ></input><br></br>
+                <input type="bio" id="bio" name="bio" defaultValue={user.bio} required></input><br></br>
                 <label htmlFor="location">Location:</label>
-                <input type="location" id="location" name="location" placeholder={user.location} ></input><br></br>
+                <input type="location" id="location" name="location" defaultValue={user.location} ></input><br></br>
+                <label htmlFor="profile_pic">Profile Pic URL:</label>
+                <input type="profile_pic" id="profile_pic" name="profile_pic" defaultValue={user.profile_pic} ></input><br></br>
+                
 
                 <input type="submit" id="login-submit" name="login-submit"></input><br></br>
             </form>

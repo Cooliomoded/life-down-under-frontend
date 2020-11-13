@@ -1,3 +1,21 @@
+input[type="button"], input[type="submit"] { 
+  color:#661a00; 
+  font: bold 84% 'trebuchet ms',helvetica,sans-serif; 
+  background-color:#fed; 
+  border:1px solid; 
+  border-radius: 5px;
+  border-color: #661a00; 
+} 
+
+button { 
+  color:#661a00; 
+  font: bold 84% 'trebuchet ms',helvetica,sans-serif; 
+  background-color:#fed; 
+  border:1px solid; 
+  border-radius: 5px;
+  border-color: #661a00; 
+}
+
 body {
   background-color: #ff704d;
 }
@@ -55,36 +73,63 @@ body {
   border: 10px #cc2900 solid;
   border-radius: 5px;
   transition: 0.75s;
+  color: #661a00;
+}
+
+.orgInfo {
+  flex: 0 1 18%;
+  background-color: #fed8b1;
+  margin: 2%;
+  padding: 1%;
+  border: 10px #cc2900 solid;
+  border-radius: 5px;
+  transition: 0.75s;
+  color: #661a00;
 }
 
 .login {
   background-color: #fed8b1;
   border: 5px #cc2900 solid;
+  border-radius: 10px;
   margin-left: 30%;
   margin-right: 30%;
   margin-bottom: 5%;
-  margin-top: 5%;
-  padding-left: 20px;
+  margin-top: 10%;
   padding-bottom: 20px;
-  text-align: left;
+  color: #661a00;
+  text-align: center;
 }
 
 .current-user {
   background-color: #fed8b1;
   border: 5px #cc2900 solid;
+  border-radius: 10px;
   margin-left: 30%;
   margin-right: 30%;
   margin-bottom: 5%;
-  margin-top: 5%;
+  margin-top: 10%;
   padding-left: 20px;
   padding-bottom: 20px;
   text-align: center;
+  color: #661a00;
+}
+
+.userProfile {
+  flex: 0 1 18%;
+  background-color: #fed8b1;
+  margin: 2%;
+  padding: 1%;
+  border: 10px #cc2900 solid;
+  border-radius: 5px;
+  transition: 0.75s;
+  color: #661a00;
 }
 
 
 .search-bar {
   background-color: #fed8b1;
   border: 5px #cc2900 solid;
+  border-radius: 10px;
   margin-left: 20%;
   margin-right: 20%;
   margin-bottom: 5%;
@@ -93,6 +138,7 @@ body {
   padding-left: 20px;
   padding-bottom: 20px;
   text-align: center;
+  color: #661a00;
 }
 
 .favorite-button:click {
@@ -113,4 +159,47 @@ body {
 
 .orgCard:hover {
   transform: scale(1.05);
+}
+
+.title {
+  background-color: #ccffff;
+  width: 105%;
+  height: 70px;
+  margin-left: -10px;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 60px;
+  font-size: 5vw;
+  color: #e68a00;
+  padding-bottom: 60px;
+  font-family: Arial, Helvetica, sans-serif;
+  text-shadow: 3px 3px #cc6600;
+  z-index: -1;
+  border: 5px solid #cc2900;  
+  position: relative;
+  overflow: visible;
+  margin-top: 110px;
+}
+.title_image {
+  position: absolute;
+  top: 50%;
+  left: 50%; 
+  transform: translate(-50%, -50%);
+}
+
+.title_text {
+  position: absolute;
+  top: 50%;
+  left: 50%; 
+  width: 60%;
+  padding-bottom: 6px;
+  transform: translate(-50%, -50%);
+  font: 90px Candara, Arial;
+  font-weight: bolder;
+  width: max-content;
+}
+
+.noFavorites {
+  position: relative;
+  align-content: center;
 }

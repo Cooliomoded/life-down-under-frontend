@@ -9,8 +9,8 @@ const LogIn = ( { handleLogin, handleSignUp } ) => {
                 <label htmlFor="username">Username:</label>
                 <input type="text" id="username" name="username" required></input><br></br>
                 <label htmlFor="password">Password:</label>
-                <input type="password" id="password" name="password" required></input><br></br>
-                <input type="submit" id="login-submit" name="login-submit"></input><br></br>
+                <input type="password" id="password" name="password" required></input><br></br><br></br>
+                <input type="submit" id="login-submit" name="login-submit"></input>
                 <button onClick={handleSignUp}>Not a User? Sign Up!</button>
             </form>
         </div>
