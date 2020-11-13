@@ -2,7 +2,6 @@ import React from 'react';
 import FavoriteInfoCard from './FavoriteInfoCard';
 
 const FavoriteContainer = ({ coolAnimals, handleClick }) => {
-    console.log(coolAnimals)
     return(
         <div className="orgContainer">
             {coolAnimals ? 

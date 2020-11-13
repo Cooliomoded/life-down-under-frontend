@@ -18,8 +18,8 @@ class App extends Component {
     selectedSpecies: null,
     currentUser: null,
     currentUserFavorites: [],
-    displayUserFavorites: false,
     coolAnimals: [],
+    displayUserFavorites: false,
     displayUser: false,
     displaySignUp: false,
     displayEditPage: false
@@ -44,70 +44,33 @@ class App extends Component {
       currentUserFavorites: user.favorites
     }))
   }
-  
-  handleSearchSubmit = (event) => {
-    event.preventDefault()
-        fetch("http://localhost:3000/search_by_species", {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            kingdom: event.target.kingdom.value,
-            animal: event.target.animal[1].value
-        })
-        })
-        .then(res => res.json())
-        .then(organisms => {
-          let sortedOrganisms = organisms.Species.sort((a, b) => (a.AcceptedCommonName > b.AcceptedCommonName) ? 1 : -1)
-          this.setState({
-          displayUser: false,
-          displayUserFavorites: false,
-          selectedSpecies: null,
-          speciesSearch: sortedOrganisms
-        })})
-  }
 
-  displayOrganism = (organism) => {
-    fetch("http://localhost:3000/search_by_taxonID", {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            taxonID: organism.TaxonID
-        })
-        })
-        .then(res => res.json())
-        .then(organism => this.setState({
-          selectedSpecies: organism
-        }))
-  }
-
-  displayFavoriteOrganism = (favorite) => {
-    fetch("http://localhost:3000/search_by_taxonID", {
-        method: "POST",
-        headers: {
-            "Accept": "application/json",
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            taxonID: favorite.tag
-        })
-        })
-        .then(res => res.json())
-        .then(organism => this.setState({
-          coolAnimals: null,
-          selectedSpecies: organism
-        }))
-  }
-
-  clearSelectedSpecies = () => {
+  handleSignUp = () => {
     this.setState({
-      selectedSpecies: null
+      displaySignUp: !this.state.displaySignUp
     })
+  }
+  
+  submitSignUp = (event) => {
+    event.preventDefault()
+      fetch('http://localhost:3000/users/signup', {
+      method: 'POST',
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          username: event.target[0].value,
+          password: event.target[1].value,
+          profile_pic: event.target[2].value,
+          bio: event.target[3].value,
+          location: event.target[4].value   
+      })
+      })
+      .then(res => res.json())
+      .then(user => this.setState({
+        currentUser: user
+      }))
   }
 
   handleLogout = () => {
@@ -116,94 +79,29 @@ class App extends Component {
       selectedSpecies: null,
       currentUser: null,
       currentUserFavorites: [],
-      displayUserFavorites: null,
+      coolAnimals: [],
+      displayUserFavorites: false,
       displayUser: false,
       displaySignUp: false,
-      coolAnimals: [],
       displayEditPage: false
     })
   }
 
-  handleSignUp = () => {
-    this.setState({
-      displaySignUp: !this.state.displaySignUp
-    })
-  }
-
-  submitSignUp = (event) => {
-    event.preventDefault()
-        fetch('http://localhost:3000/users/signup', {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            username: event.target[0].value,
-            password: event.target[1].value,
-            profile_pic: event.target[2].value,
-            bio: event.target[3].value,
-            location: event.target[4].value   
-        })
-        })
-        .then(res => res.json())
-        .then(user => this.setState({
-          currentUser: user
-        }))
-  }
-
-  addToFavorites = (organism) => {
-    const imgURL = organism.Species.Image ? (organism.Species.Image.URL ?  organism.Species.Image.URL : organism.Species.Image[0].URL) : null
-    fetch(`http://localhost:3000/organisms/create_organism`, {
-      method: "POST",
-      headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-          name: organism.Species.AcceptedCommonName,
-          img: imgURL,
-          tag: organism.Species.TaxonID
-      })
-      })
-      .then(res => res.json())
-      .then(organism => this.createFavorite(organism))
-    }
-
   showProfile = () => {
     this.setState({
-      displayUser: !this.state.displayUser,
+      displayUser: true,
       coolAnimals: [],
       displayUserFavorites: false,
       displayEditPage: false
     })
   }
 
-    createFavorite = (organism) => {
-      fetch('http://localhost:3000/favorites/create_favorite', {
-        method: "POST",
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          user_id: this.state.currentUser.id,
-          organism_id: organism.id
-        })
-      })
-      .then(res => res.json())
-      .then(favorite => {if(!this.state.currentUserFavorites.find(favorite => favorite.organism_id === organism.id)) {
-        this.setState({
-        currentUserFavorites: [...this.state.currentUserFavorites, favorite]
-      })}})
-    }
-
   displayUserFavorites = () => {
     this.setState({
       speciesSearch: [],
       selectedSpecies: null,
       displayUser: false,
-      displayUserFavorites: !this.state.displayUserFavorites
+      displayUserFavorites: true
     })
     this.fetchFavorites()
   }
@@ -218,9 +116,13 @@ class App extends Component {
         },
         })
         .then(res => res.json())
-        .then(favorite => this.setState({
-          coolAnimals: [...this.state.coolAnimals, favorite]
-        }))
+        .then(favorite => {
+          this.state.coolAnimals.includes(favorite) ? this.setState({
+            coolAnimals: this.state.coolAnimals
+          }) :
+          this.setState({
+            coolAnimals: [...this.state.coolAnimals, favorite]
+        })})
     ))
   }
 
@@ -276,6 +178,108 @@ class App extends Component {
       coolAnimals: [],
       displayEditPage: false
     }))
+  }
+
+  handleSearchSubmit = (event) => {
+    event.preventDefault()
+      fetch("http://localhost:3000/search_by_species", {
+      method: "POST",
+      headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+          kingdom: event.target.kingdom.value,
+          animal: event.target.animal[1].value
+      })
+      })
+      .then(res => res.json())
+      .then(organisms => {
+        let sortedOrganisms = organisms.Species.sort((a, b) => (a.AcceptedCommonName > b.AcceptedCommonName) ? 1 : -1)
+        this.setState({
+        displayUser: false,
+        displayUserFavorites: false,
+        selectedSpecies: null,
+        speciesSearch: sortedOrganisms
+      })})
+  }
+
+  displayOrganism = (organism) => {
+    fetch("http://localhost:3000/search_by_taxonID", {
+      method: "POST",
+      headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+          taxonID: organism.TaxonID
+      })
+      })
+      .then(res => res.json())
+      .then(organism => this.setState({
+        selectedSpecies: organism
+      }))
+  }
+
+  displayFavoriteOrganism = (favorite) => {
+    fetch("http://localhost:3000/search_by_taxonID", {
+      method: "POST",
+      headers: {
+          "Accept": "application/json",
+          "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+          taxonID: favorite.tag
+      })
+      })
+      .then(res => res.json())
+      .then(organism => this.setState({
+        coolAnimals: null,
+        selectedSpecies: organism
+      }))
+  }
+
+  clearSelectedSpecies = () => {
+    this.setState({
+      selectedSpecies: null
+    })
+  }
+
+  addToFavorites = (organism) => {
+    const imgURL = organism.Species.Image ? (organism.Species.Image.URL ?  organism.Species.Image.URL : organism.Species.Image[0].URL) : null
+    fetch(`http://localhost:3000/organisms/create_organism`, {
+      method: "POST",
+      headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+          name: organism.Species.AcceptedCommonName,
+          img: imgURL,
+          tag: organism.Species.TaxonID
+      })
+      })
+      .then(res => res.json())
+      .then(organism => this.createFavorite(organism))
+    }
+
+  createFavorite = (organism) => {
+    fetch('http://localhost:3000/favorites/create_favorite', {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        user_id: this.state.currentUser.id,
+        organism_id: organism.id
+      })
+    })
+    .then(res => res.json())
+    .then(favorite => {if(!this.state.currentUserFavorites.find(favorite => favorite.organism_id === organism.id)) {
+      this.setState({
+      currentUserFavorites: [...this.state.currentUserFavorites, favorite]
+    })}})
   }
   
   render() {

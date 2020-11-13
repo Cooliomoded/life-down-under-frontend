@@ -9,8 +9,7 @@ const FavoriteInfoCard = ({ favorite, handleClick }) => {
         }
         return splitStr.join(' '); 
     }
-
-    console.log(favorite.img)
+    
     return(
         <div onClick={() => handleClick(favorite)} className="orgCard minOrgCard maxOrgCard">
             <h2>{titleCase(favorite.name)}</h2>
