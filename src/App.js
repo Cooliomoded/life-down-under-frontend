@@ -281,9 +281,12 @@ class App extends Component {
     })
     .then(res => res.json())
     .then(favorite => {if(!this.state.currentUserFavorites.find(favorite => favorite.organism_id === organism.id)) {
+      alert("Successfully added to favorites!")
       this.setState({
       currentUserFavorites: [...this.state.currentUserFavorites, favorite]
-    })}})
+    })} 
+    }
+    )
   }
   
   render() {
@@ -301,7 +304,7 @@ class App extends Component {
         {this.state.displayEditPage ? <UserEditPage user={this.state.currentUser} editProfile={this.editProfile} /> : null}
         {this.state.displayUser ? <DisplayUserInfo user={this.state.currentUser} displayEditPage={this.displayEditPage} deleteUser={this.deleteUser}/> : 
         (this.state.selectedSpecies ?
-        <DisplayOrganism selectedSpecies={this.state.selectedSpecies} handleClick={this.clearSelectedSpecies} addToFavorites={this.addToFavorites} currentUser={this.state.currentUser}/>
+        <DisplayOrganism selectedSpecies={this.state.selectedSpecies} handleClick={this.clearSelectedSpecies} addToFavorites={this.addToFavorites} currentUser={this.state.currentUser} coolAnimals={this.state.coolAnimals}/>
         : <OrganismContainer speciesSearch={this.state.speciesSearch} handleClick={this.displayOrganism} displayUserFavorites={this.displayUserFavorites}/>)}
         
       </div>

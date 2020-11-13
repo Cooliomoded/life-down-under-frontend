@@ -1,6 +1,6 @@
 import React from 'react'
 
-const OrganismInfoCard = ({ selectedSpecies, handleClick, addToFavorites, currentUser }) => {
+const OrganismInfoCard = ({ selectedSpecies, handleClick, addToFavorites, currentUser, coolAnimals }) => {
     
     function titleCase(str) {
         var splitStr = str.toLowerCase().split(' ');
@@ -19,7 +19,7 @@ const OrganismInfoCard = ({ selectedSpecies, handleClick, addToFavorites, curren
             </div>
             }
             <div className="orgInfo">
-            <h1><u>{titleCase(selectedSpecies.Species.AcceptedCommonName)}</u></h1>
+            {selectedSpecies.Species.AcceptedCommonName ? <h1><u>{titleCase(selectedSpecies.Species.AcceptedCommonName)}</u></h1> : null}
             <h3><i>{selectedSpecies.Species.ScientificName}</i></h3>
             <h2>Class Name: {selectedSpecies.Species.ClassName}</h2>
             <h2>Common Class Name: {titleCase(selectedSpecies.Species.ClassCommonName)}</h2>
@@ -27,9 +27,11 @@ const OrganismInfoCard = ({ selectedSpecies, handleClick, addToFavorites, curren
             <h2>Common Family Name: {selectedSpecies.Species.FamilyCommonName}</h2>
             <h2>Environment: {selectedSpecies.Species.SpeciesEnvironment}</h2>
             {selectedSpecies.Species.Endemicity === "N" ? <h3>Species is native to Australia</h3> : <h3>Species is not native to Australia</h3>}
+            <h4>Description:</h4>
+            {selectedSpecies.Species.Profile ? <p>{Object.values(selectedSpecies.Species.Profile)}</p> : null} 
             </div>   
-            {currentUser ? <button className='favorite-button' onClick={() => addToFavorites(selectedSpecies)}>Add To Favorites</button> : <h4>Sign up to add organism to favorites!</h4> }
-            {selectedSpecies.Species.Profile ? <p>{Object.values(selectedSpecies.Species.Profile)}</p> : null}    
+            {currentUser ? (!!coolAnimals.find(favorite => parseInt(favorite.tag) == selectedSpecies.Species.TaxonID) ? <p>Organism already in favorites</p> 
+            : <button className='favorite-button' onClick={() => addToFavorites(selectedSpecies)}>Add To Favorites</button>) : <h4>Sign up to add organism to favorites!</h4> }   
             <button onClick={handleClick}>Return to Search Results</button><br></br><br></br><br></br>
 
         </div>

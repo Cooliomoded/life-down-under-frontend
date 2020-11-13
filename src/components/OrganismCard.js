@@ -12,7 +12,7 @@ const OrganismCard = ({ organism, handleClick }) => {
 
     return(
         <div onClick={() => handleClick(organism)} className="orgCard minOrgCard maxOrgCard">
-            <h3>{titleCase(organism.AcceptedCommonName)}</h3>
+            {organism.AcceptedCommonName ? <h3>{titleCase(organism.AcceptedCommonName)}</h3> : null}
             <h5><i>{organism.ScientificName}</i></h5>
             <h4>{organism.KingdomName}</h4>
             <h4>{organism.ClassName}</h4>

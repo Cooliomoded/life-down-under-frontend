@@ -9,10 +9,10 @@ const FavoriteInfoCard = ({ favorite, handleClick }) => {
         }
         return splitStr.join(' '); 
     }
-    
+
     return(
         <div onClick={() => handleClick(favorite)} className="orgCard minOrgCard maxOrgCard">
-            <h2>{titleCase(favorite.name)}</h2>
+            {favorite.name ? <h2>{titleCase(favorite.name)}</h2> : null}
             {favorite.img ? <img height="308" width="400" src={favorite.img}/> : 
             <div>
                 <img height="250" width="400" src={process.env.PUBLIC_URL + '/images/steve1.png'}></img>
