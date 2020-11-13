@@ -14,7 +14,7 @@ const OrganismInfoCard = ({ selectedSpecies, handleClick, addToFavorites, curren
         <div>
             {selectedSpecies.Species.Image ? (selectedSpecies.Species.Image.URL ? <img src={selectedSpecies.Species.Image.URL} height="400" width="400" alt={selectedSpecies.Species.Image.Title}/> : selectedSpecies.Species.Image.map(image => <img key={image.URL} height="400" width="400" src={image.URL} alt={image.Title}/>)) :
             <div>
-            <img height="300" width="400" src={process.env.PUBLIC_URL + '/images/steve1.png'}></img>
+            <img height="300" width="400" src={process.env.PUBLIC_URL + '/images/steve1.png'} alt="No Organism Pic Available"></img>
             <h3>Sorry! No Image Available</h3>
             </div>
             }
@@ -26,7 +26,7 @@ const OrganismInfoCard = ({ selectedSpecies, handleClick, addToFavorites, curren
             <h2>Family Name: {selectedSpecies.Species.FamilyName}</h2>
             <h2>Common Family Name: {selectedSpecies.Species.FamilyCommonName}</h2>
             <h2>Environment: {selectedSpecies.Species.SpeciesEnvironment}</h2>
-            {selectedSpecies.Species.Endemicity == "N" ? <h3>Species is native to Australia</h3> : <h3>Species is not native to Australia</h3>}
+            {selectedSpecies.Species.Endemicity === "N" ? <h3>Species is native to Australia</h3> : <h3>Species is not native to Australia</h3>}
             </div>   
             {currentUser ? <button className='favorite-button' onClick={() => addToFavorites(selectedSpecies)}>Add To Favorites</button> : <h4>Sign up to add organism to favorites!</h4> }
             {selectedSpecies.Species.Profile ? <p>{Object.values(selectedSpecies.Species.Profile)}</p> : null}    

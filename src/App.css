@@ -200,6 +200,6 @@ body {
 }
 
 .noFavorites {
-  position: relative;
-  align-content: center;
+  width: Auto; 
+  margin: 0 auto;
 }

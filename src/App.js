@@ -131,7 +131,7 @@ class App extends Component {
       displayEditPage: !this.state.displayEditPage,
       speciesSearch: [],
       selectedSpecies: null,
-      displayUserFavorites: null,
+      displayUserFavorites: false,
       displayUser: false,
       displaySignUp: false,
     })
@@ -172,7 +172,7 @@ class App extends Component {
       selectedSpecies: null,
       currentUser: null,
       currentUserFavorites: [],
-      displayUserFavorites: null,
+      displayUserFavorites: false,
       displayUser: false,
       displaySignUp: false,
       coolAnimals: [],
@@ -217,7 +217,8 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(organism => this.setState({
-        selectedSpecies: organism
+        selectedSpecies: organism,
+        displayUserFavorites: false
       }))
   }
 
@@ -234,7 +235,7 @@ class App extends Component {
       })
       .then(res => res.json())
       .then(organism => this.setState({
-        coolAnimals: null,
+        displayUserFavorites: false,
         selectedSpecies: organism
       }))
   }
