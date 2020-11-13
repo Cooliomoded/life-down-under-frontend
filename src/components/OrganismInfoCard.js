@@ -28,7 +28,7 @@ const OrganismInfoCard = ({ selectedSpecies, handleClick, addToFavorites, curren
             <h2>Environment: {selectedSpecies.Species.SpeciesEnvironment}</h2>
             {selectedSpecies.Species.Endemicity === "N" ? <h3>Species is native to Australia</h3> : <h3>Species is not native to Australia</h3>}
             <h4>Description:</h4>
-            {selectedSpecies.Species.Profile ? <p>{Object.values(selectedSpecies.Species.Profile)}</p> : null} 
+            {Object.keys(selectedSpecies.Species.Profile).length > 0 ? <p>{Object.values(selectedSpecies.Species.Profile)}</p> : <p>No Description Available</p>} 
             </div>   
             {currentUser ? (!!coolAnimals.find(favorite => parseInt(favorite.tag) == selectedSpecies.Species.TaxonID) ? <p>Organism already in favorites</p> 
             : <button className='favorite-button' onClick={() => addToFavorites(selectedSpecies)}>Add To Favorites</button>) : <h4>Sign up to add organism to favorites!</h4> }   
