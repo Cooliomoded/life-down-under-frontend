@@ -59,8 +59,10 @@ class App extends Component {
         })
         .then(res => res.json())
         .then(organisms => {
-          let sortedOrganisms = organisms.Species.sort((a, b) => (a.AcceptedCommonName.toLowerCase() > b.AcceptedCommonName.toLowerCase()) ? 1 : -1)
+          let sortedOrganisms = organisms.Species.sort((a, b) => (a.AcceptedCommonName > b.AcceptedCommonName) ? 1 : -1)
           this.setState({
+          displayUser: false,
+          selectedSpecies: null,
           speciesSearch: sortedOrganisms
         })})
   }
