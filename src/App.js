@@ -98,10 +98,13 @@ class App extends Component {
 
   displayUserFavorites = () => {
     this.setState({
+      coolAnimals: []
+    })
+    this.setState({
       speciesSearch: [],
       selectedSpecies: null,
       displayUser: false,
-      displayUserFavorites: true
+      displayUserFavorites: true,
     })
     this.fetchFavorites()
   }
